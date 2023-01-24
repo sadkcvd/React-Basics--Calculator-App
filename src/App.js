@@ -1,25 +1,66 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useRef, useState } from "react";
 
-function App() {
+export default function App() {
+  const inputRef = useRef(null);
+  const resultRef = useRef(null);
+  const [result, setResult] = useState(0);
+
+  const add = (e) => {
+    e.preventDefault();
+    setResult((result) => result + Number(inputRef.current.value));
+  };
+  const substract = (e) => {
+    e.preventDefault();
+    setResult((result) => result - Number(inputRef.current.value));
+  };
+  const multiple = (e) => {
+    e.preventDefault();
+    setResult((result) => result * Number(inputRef.current.value));
+  };
+  const divide = (e) => {
+    e.preventDefault();
+    setResult((result) => result / Number(inputRef.current.value));
+  };
+
+  const resetResult = (e) => {
+    e.preventDefault();
+    setResult((result) => (result = 0));
+  };
+
+  const resetInput = (e) => {
+    e.preventDefault();
+    inputRef.current.value = 0;
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <span ref={resultRef}>{result}</span>
+
+      <div>
+        <input
+          placeholder="Enter the number"
+          ref={inputRef}
+          type="Number"
+          pattern="[0-9]"
+        />
+      </div>
+
+      <div className="buttons">
+        <button onClick={add}>Add</button>
+        <button onClick={substract}>Substract</button>
+        <button onClick={multiple}>Multiply</button>
+        <button onClick={divide}>Divide</button>
+      </div>
+      <div className="reset-buttons">
+        <button onClick={resetInput}>
+          Reset Input
+        </button>
+        <button onClick={resetResult}>
+          Reset Result
+        </button>
+      </div>
     </div>
   );
 }
 
-export default App;
